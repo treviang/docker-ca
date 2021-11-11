@@ -91,9 +91,4 @@ Lezione 50: caratteristiche della cache
 docker build -t without-cache .
 docker build -t with-cache .
 
-permette di cachare i passaggi con cui vengono buildate le immagini
-
-Lezione 53: Networking with docker
-
-Lezione 54: Bridge networks
-
+permette di cachare i passaggi con cui vengono buildate le immagini.

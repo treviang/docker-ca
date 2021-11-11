@@ -1,0 +1,23 @@
+Lezione 53: Networking with docker
+
+Lezione 54: Bridge networks
+Una rete bridge permette ai container collegati di comunicare tra loro mantenendo l'isolamento dal resto dei container.
+Per collegarsi ad Internet un container deve passare attraverso il bridge.
+Bridge è il tipo di rete di default con cui vengono creati i container.
+
+Es: avvio due container
+docker container run -dt --name bridge01 ubuntu
+docker container run -dt --name bridge02 ubuntu
+
+bridge01 collegandosi in bash e digitando il comando ifconfig ha ip 172.17.0.3
+bridge02 ha ip 172.17.0.4
+
+Andando a osservare la tabela di routing del container bridge01
+root@5f50d8389372:/# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
+
+Si può notare che il bridge 127.17.0.1 è il default gateway per tutti i container nel bridge network.
+
+Lezione 55: User defined bridge networks
