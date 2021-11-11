@@ -1,0 +1,99 @@
+Lezione 28: ADD vs COPY
+COPY e ADD permettono entrambe di copiare file dalla macchina locale verso il container
+
+COPY permette solo di copiare il file
+ADD invece permette di usare un URL anzichè un file locale oppure di decomprimere un file rar/tar
+
+è meglio usare però CURL e WGET per recuperare file remoti anzichè ADD
+
+Lezione 29: comando EXPOSE
+EXPOSE informa che il container rimane in ascolto in una specifica porta. E' solo informativo e fa da documentazione tra chi usa l'immagine da parte di chi la crea.
+EXPOSE <porta>
+
+Lezione 30: HEALTHCHECK
+HEALTHCHECK specifica come verificare se la nostra applicazione è attiva 
+
+Es: HEALTHCHECK --interval=5s CMD ping -c 1 172.17.0.2
+CMD viene invocato ogni intervallo di tot secondi
+--interval=DURATION (default: 30s)
+--timeout=DURATION (default: 30s)
+--start-period=DURATION (default: 0s)
+--retries=N (default: 3)
+
+I possibili esiti-> 0:success e 1:failure
+
+Lezione 31: ENTRYPOINT
+ENTRYPOINT main command del container
+a differenza di CMD non può mai essere sovrascritto ma viene eseguito sempre
+
+Lezione 32: WORKDIR
+WORKDIR imposta la working directory dove viene impostato il container al suo avvio
+
+Il comando WORKDIR può essere inserito più volte in un dockerfile ed è incrementale:
+
+WORKDIR /a
+WORKDIR b
+WORKDIR c
+RUN pwd
+ 
+The output of the final pwd command in this Dockerfile would be /a/b/c.
+
+Lezione 36: comando ENV
+ENV setta una variabile di ambiente con chiave-valore
+
+si può usare anche -e, --env a riga di comando per impostare le variabili di ambiente
+--env USER=ADMINUSER
+
+Lezione 38: tag images
+docker build -t demo:v1 .
+docker tag 067bf037874d workdir-demo:v1
+<nome container>: <versione>
+
+Lezione 39: Docker COMMIT
+con l'istruzione docker COMMIT è possibile replicare un'immagine con le stesse caratteristiche di un'immagine che è stata customizzata
+Ad esempio: docker container commit busybox busybox-modified crea una nuova immagine docker con le caratteristiche che ho modificato nell'immagine busybox.
+
+Lezione 40: Layer nelle immagini docker
+Le immagini e i container sono sostanzialmente fatti da una serie di layer.
+La differenza è che 
+Ogni commando nel dockerfile aggiunge un layer.
+
+Lezione 41: CLI Docker commands
+docker image --help fornisce l'elenco di tutti i comandi utilizzabili con docker image
+
+Lezione 42: Inspect docker images
+docker image inspect permette di conoscere tutte le informazioni associate ad una docker image
+
+Lezione 43: Docker prune
+prune permettere di rimuovere le immagini inutilizzate
+immagini non referenziate da nessun container e senza tag
+
+docker image prune
+docker image prune -a (rimuove tutte le immagini non referenziate da nessun container)
+
+Lezione 44: flattening docker images
+
+Lezione 45: Docker registry
+Un registro è un'applicazione server side che permette di distribuire immagini docker
+E' possibile anche creare un registro che gira su container locale
+
+Lezione 46: push images to docker hub
+
+Lezione 47: docker search
+permette di cercare tra le immagini all'interno del docker hub
+
+Lezione 48: docker save
+docker save busybox > busybox.tar
+docker load < busybox.tar
+
+Lezione 50: caratteristiche della cache
+
+docker build -t without-cache .
+docker build -t with-cache .
+
+permette di cachare i passaggi con cui vengono buildate le immagini
+
+Lezione 53: Networking with docker
+
+Lezione 54: Bridge networks
+
