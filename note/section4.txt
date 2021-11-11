@@ -1,0 +1,48 @@
+Lezione 61: Network orchestration
+Gestire il ciclo di vita dei container in reti ampie.
+Devono esserci minimo 2 container in esecuzione.
+Serve ad esempio a fare in modo che quando un container si è stoppato farne ripartire automaticamente uno nuovo.
+
+Le principali soluzioni di orchestration sono:
+- Docker swarm
+- Kubernetes
+- Elastic Container Service (AWS ECS)
+
+Lezione 62: Docker swarm
+Tool di orchestration nativamente supportato da docker.
+Es: swarm cluster con 3 nodi
+
+Lezione 63: inizializzare docker swarm
+Node è un'istanza del Docker engine partecipante a uno swarm.
+Un manager Node che smista il lavoro tra i worker nodes.
+
+Definire uno swarm
+- docker swarm init --advertise-addr 142.93.214.57
+
+Vedere i nodi attivi:
+- docker node ls
+
+Per aggiungere dei nodi allo swarm:
+- docker swarm join --token 32123 142.93.214.57:2337
+
+Lezione 66:
+Il service è la definizione nel manager o nei nodi worker dei task che devono essere eseguiti.
+Vengono definite le repliche che devono essere presenti.
+
+docker service create --name webserver --replicas 1 nginix
+
+Se ho 2 nodi worker nel mio swarm e ho impostato una replica quando un container viene killato automaticamente lo swarm me ne crea uno nuovo in un atro nodo.
+
+Lezione 68: scaling swarm service
+Container che girano in un service sono chiamati task.
+
+Aumentare/diminuire il numero dei service:
+- docker service scale webserver=5
+- docker service scale webserver=1
+
+Mostra i dettagli del service:
+- docker service ps webserver
+Rimuove il servizio:
+- docker service rm webserver
+
+
