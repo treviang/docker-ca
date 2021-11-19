@@ -45,4 +45,57 @@ Mostra i dettagli del service:
 Rimuove il servizio:
 - docker service rm webserver
 
+Lezione 70: Multiple Approaches for Scaling
+
+docker service scale service01=2
+docker service update --replicas 2 service02
+
+Entrambi creano 2 repliche del servizio e fanno le stesse operazioni. 
+La differenza è che il primo comando permette di scalare più servizi con un'unica istruazione:
+
+docker service scale service01=2 service02=3
+
+Lezione 72: Replicated vs Global Service
+Quando creo una replica il task viene associato ad esattamente il numero delle repliche che ho specificato.
+Un global service invece fa eseguire un task in ogni nodo. Quando viene aggiunto un nodo allo swarm lo scheduler assigna il task al nuovo nodo.
+
+Esempio:
+docker service create --name antivirus --mode global -dt ubuntu
+
+Invece una replica viene creata così:
+docker service create myreplica --replicas 1 nginx
+
+Lezione 74: Draining Swarm Node
+Effettuare il draining di un nodo significa metterlo in "manutenzione" quindi tutti i task associati vengono messi in "stopped".
+
+- Cambio availability in drain:
+docker node update --availability drain swarm03
+
+- Cambio availability in active:
+docker node update --availability active swarm03
+
+Lezione 76: Inspecting Swarm Service and Nodes
+Docker inspect fornisce informazioni su un docker object.
+
+- docker service inspect <nome-servizio>: lista le informazioni dell'oggetto service specificato
+- docker service inspect <nome-servizio> -pretty: presenta le informazioni in un modo maggiormente leggibile
+
+La stessa cosa è possibile farla per i node:
+
+- docker node inspect swarm01 
+- docker node inspect swarm01 -pretty
+
+Lezione 78: Publish Ports to Swarm Tasks
+Per far accedere ai servizi esposti da un container è necessario esporre le porte dei servizi all'esterno:
+
+- docker service create --name mywebserver --replicas 2 --publish 8080:80 nginx
+
+Lezione 80: Docker Compose
+Docker compose permette tramite uno YAML di lanciare uno swarm con determinate caratteristiche
+
+Lanciare uno swarm definito in un docker compose:
+- docker-compose up -d
+
+Stoppare uno swarm definito in un docker compose:
+- docker-compose down
 
