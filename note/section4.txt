@@ -99,3 +99,39 @@ Lanciare uno swarm definito in un docker compose:
 Stoppare uno swarm definito in un docker compose:
 - docker-compose down
 
+Lezione 82: Multi service application in a swarm
+
+- docker stack deploy
+può lanciare l'applicazione su tutto lo swarm.
+
+Ad esempio:
+- docker stack deploy --compose-file docker-compose.yml mydemo
+
+Per rimuovere lo swarm:
+- docker stack rm mydemo
+
+Lezione 84: Locking swarm cluster
+Lo swarm cluster può contenere informazioni sensibili. Per questo è possibile impostare dei meccanismi di sicurezza.
+
+Esempio:
+docker swarm update --autolock=true
+systemctl restart docker
+docker swarm unlock
+
+Per vedere la chiave una volta sbloccato lo swarm:
+docker swarm unlock-key
+
+Per ruotare la chiave:
+docker swarm unlock-key --rotate
+
+Lezione 86: Problemi con lo Swarm Service Deployment
+Se tutti i nodi sono esausti il service potrebbe andare nello stato pending.
+
+Lezione 87: Montare volumi con Swarm
+E' importante avere un volume relativo a ciascun container.
+
+Creare un service con un volume:
+- docker service create --name myservice --mount type=volume,source=myvolume,target=/mypath nginx
+
+Verificare le informazioni sul volume:
+- docker volume ls
